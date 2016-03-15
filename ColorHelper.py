@@ -12,16 +12,16 @@ def hslFloatToRgbFloat(color):
     return(colorsys.hls_to_rgb(color[0], color[2], color[1]))
 
 def rgbIntToRgbFloat(color):
-    return(color[0]/256, color[1]/256, color[2]/256)
+    return(color[0]/255, color[1]/255, color[2]/255)
 
 def rgbFloatToRgbInt(color):
-    return(int(round(color[0]*256)), int(round(color[1]*256)), int(round(color[2]*256)))
+    return(int(round(color[0]*255)), int(round(color[1]*255)), int(round(color[2]*255)))
 
 def hslFloatToHslInt(color):
-    return(int(round(color[0]*360)), int(round(color[1]*100)), int(round(color[2]*100)))
+    return(int(round(color[0]*359)), int(round(color[1]*99)), int(round(color[2]*99)))
 
 def hslIntToHslFloat(color):
-    return(color[0]/256, color[1]/256, color[2]/256)
+    return(color[0]/359, color[1]/99, color[2]/99)
 
 # helper color conversion methods
 def hslIntComplement(color):
