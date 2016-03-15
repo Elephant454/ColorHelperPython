@@ -25,4 +25,12 @@ def hslIntToHslFloat(color):
 
 # helper color conversion methods
 def hslIntComplement(color):
-    return((color[0]+180)%360, color[1], color[2])
+    return((color[0]+180)%359, color[1], color[2])
+
+def hexComplement(color):
+    rgb = (int(color[-6:-4], 16)/255, int(color[-4:-2], 16)/255, int(color[-2:], 16)/255)
+    hls = colorsys.rgb_to_hls(rgb[0], rgb[1], rgb[2])
+    hlsComplement = ((((hls[0]*359)+180)%360)/359, hls[1], hls[2])
+    rgbComplement = colorsys.hls_to_rgb(hlsComplement[0], hlsComplement[1], hlsComplement[2])
+    return(rgbComplement[0]*255, rgbComplement[1]*255, rgbComplement[2]*255)
+
