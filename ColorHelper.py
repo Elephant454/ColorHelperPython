@@ -4,12 +4,12 @@ import colorsys
 def hex6ToRgbInt(color):
     return(int(color[-6:-4], 16), int(color[-4:-2], 16), int(color[-2:], 16))
 
-def rgbFloatToHslFloat(color):
-    result = colorsys.rgb_to_hls(color[0], color[1], color[2])
-    return(result[0], result[2], result[1])
+#def rgbFloatToHslFloat(color):
+#    result = colorsys.rgb_to_hls(color[0], color[1], color[2])
+#    return(result[0], result[2], result[1])
 
-def hslFloatToRgbFloat(color):
-    return(colorsys.hls_to_rgb(color[0], color[2], color[1]))
+#def hslFloatToRgbFloat(color):
+#    return(colorsys.hls_to_rgb(color[0], color[2], color[1]))
 
 def rgbIntToRgbFloat(color):
     return(color[0]/255, color[1]/255, color[2]/255)
@@ -17,8 +17,8 @@ def rgbIntToRgbFloat(color):
 def rgbFloatToRgbInt(color):
     return(int(round(color[0]*255)), int(round(color[1]*255)), int(round(color[2]*255)))
 
-#def hslFloatToHslInt(color):
-#    return(int(round(color[0]*359)), int(round(color[1]*99)), int(round(color[2]*99)))
+def hslFloatToHslInt(color):
+    return(int(round(color[0]*359)), int(round(color[1]*99)), int(round(color[2]*99)))
 
 def hslIntToHslFloat(color):
     return(color[0]/359, color[1]/99, color[2]/99)
@@ -26,18 +26,6 @@ def hslIntToHslFloat(color):
 # helper color conversion methods
 def hslIntComplement(color):
     return((color[0]+180)%359, color[1], color[2])
-
-def hexComplement(color):
-    #rgb = (int(color[-6:-4], 16), int(color[-4:-2], 16), int(color[-2:], 16))
-    rgb = (int(color[-6:-4], 16)/255, int(color[-4:-2], 16)/255, int(color[-2:], 16)/255)
-    print(rgb)
-    hls = colorsys.rgb_to_hls(rgb[0], rgb[1], rgb[2])
-    print(hls)
-    hlsComplement = ((((hls[0]*359)+180)%359)/359, hls[1], hls[2])
-    print(hlsComplement)
-    rgbComplement = colorsys.hls_to_rgb(hlsComplement[0], hlsComplement[1], hlsComplement[2])
-    print(rgbComplement)
-    return(rgbComplement[0]*255, rgbComplement[1]*255, rgbComplement[2]*255)
 
 def rgbFloatToHslFloat(color):
     rgbMin = min(color[0], color[1], color[2])
@@ -72,3 +60,34 @@ def rgbFloatToHslFloat(color):
 
     return(h, s, l)
 
+def hslFloatToRgbFloat(color):
+    def hueToRgb(v1, v2, vH):
+        if(vH < 0):
+            vH += 1
+        if(vH > 1):
+            vH -= 1
+        if((6*vH) < 1):
+            return (v1 + (v2-v1) * 6 * vH)
+        if((2*vH) < 1):
+            return(v2)
+        if((3*vH) < 2):
+            return(v1 + (v2-v1) * ((2/3) - vH) * 6)
+        return(v1)
+
+    if(color[1]==0):
+        r = color[2]*255
+        g = color[2]*255
+        b = color[2]*255
+    else:
+        if(color[2]<0.5):
+            v2 = color[2] * (1+color[1])
+        else:
+            v2 = (color[2] + color[1]) - (color[1] * color[2])
+
+        v1 = 2 * color[2] - v2
+
+        r = 255 * hueToRgb(v1, v2, color[0] + (1/3))
+        g = 255 * hueToRgb(v1, v2, color[0])
+        b = 255 * hueToRgb(v1, v2, color[0] - (1/3))
+
+    return(r, g, b)
