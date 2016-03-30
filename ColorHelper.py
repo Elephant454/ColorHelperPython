@@ -2,6 +2,9 @@
 def hexToRgb(color):
     return(int(color[-6:-4], 16), int(color[-4:-2], 16), int(color[-2:], 16))
 
+def rgbToHex(color):
+    return("#" + "{0:x}".format(color[0]) + "{0:x}".format(color[1]) + "{0:x}".format(color[2]))
+
 def rgbToHsl(color):
     r = color[0]/255
     g = color[1]/255
