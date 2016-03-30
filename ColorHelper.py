@@ -75,5 +75,5 @@ def hslToRgb(color):
     return(int(round(r)), int(round(g)),int(round(b)))
 
 # helper color conversion methods
-def hslIntComplement(color):
+def hslComplement(color):
     return((color[0]+180)%360, color[1], color[2])
