@@ -5,6 +5,7 @@ def hexToRgb(color):
 def rgbToHex(color):
     return("#" + "{0:x}".format(color[0]) + "{0:x}".format(color[1]) + "{0:x}".format(color[2]))
 
+# rgbToHsl and hslToRgb taken nearly line for line from http://www.easyrgb.com/index.php?X=MATH
 def rgbToHsl(color):
     r = color[0]/255
     g = color[1]/255
